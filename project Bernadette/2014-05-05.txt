@@ -1,0 +1,155 @@
+function myFunction() {
+  
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  
+  var sheet1 = ss.getSheets()[0];
+  var sheet2 = ss.getSheets()[1];
+  var sheet3 = ss.getSheets()[2];
+  var email = Session.getActiveUser().getEmail();
+  var message = 'User: ' + email + ' has added to the table ' + sheet2.getName();
+  
+  var range = sheet2.getRange(1,1,3);
+  var values = range.getValues();
+  
+  var currLeonardLocation = '';
+  
+  var message2 = '';
+//  for (var col in values) {
+//    for (var row in values[col]) {
+//      Logger.log(values[row][col]);
+//      message2 += values[row][col];
+//    }
+//  }
+  
+  message2 = values[0][0] + " " + values[1][0] + " " + values[2][0];
+  
+  
+  // SETTING TABLE ALLIGNMENT FOR RANGE range
+  var colOne = "right";      // valid values: right, left, center
+  var colTwo = "center";     // valid values: right, left, center
+  var colThree = "left";     // valid values: right, left, center
+  var horizontalAlignments = [[colOne, colTwo, colThree], [colOne, colTwo, colThree], [colOne, colTwo, colThree], [colOne, colTwo, colThree], [colOne, colTwo, colThree], [colOne, colTwo, colThree]];
+  var range = sheet3.getRange("A1:C6");
+  range.setHorizontalAlignments(horizontalAlignments);
+
+  
+  // SET HEADERS
+//  var RackHeader = sheet3.getRange('A1');
+//  var RoomHeader = sheet3.getRange('B1');
+//  var TimestampHeader = sheet3.getRange('C1');
+//  RackHeader.setBorder(true, true, true, true, true, true);
+//  RoomHeader.setBorder(true, true, true, true, true, true);
+//  TimestampHeader.setBorder(true, true, true, true, true, true);
+//  RackHeader.setFontWeight("bold");
+//  RoomHeader.setFontWeight("bold");
+//  TimestampHeader.setFontWeight("bold");
+//  RackHeader.setValue('RackName');
+//  RoomHeader.setValue('Room Number');
+//  TimestampHeader.setValue('Timestamp');
+
+  // SET HEADERS
+  var Headers = sheet3.getRange('A1:C1');
+  Headers.setBorder(true, true, true, true, true, true);
+  Headers.setFontWeight("bold");
+  var HeaderValues = [["Rack Name", "Room Number", "Timestamp"]];
+  Headers.setValues(HeaderValues);
+  var tempRange = sheet3.getRange("A8:C8");
+  var valuesHere = [["value1", "value2", "value3"]];
+  tempRange.setValues(valuesHere);
+  
+  // top left bottom right vertical horizontal
+                    
+                    
+                    
+                    
+  // SET EACH SYSTEM
+
+  // LEONARD position 1
+  var Leonard = sheet3.getRange('A2:C2');
+  Leonard.setBorder(true, true, true, true, true, true);
+  var LeonardValues = [["LEONARD", "----", "----"]];
+  Leonard.setValues(LeonardValues);
+
+  
+  // HOWARD position 2  
+  var Howard = sheet3.getRange('A3:C3');
+  Howard.setBorder(true, true, true, true, true, true);
+  var HowardValues = [["HOWARD", "----", "----"]];
+  Howard.setValues(HowardValues);
+  
+  // SHELDON position 3
+  var Sheldon = sheet3.getRange('A4:C4');
+  Sheldon.setBorder(true, true, true, true, true, true);
+  var SheldonValues = [["SHELDON", "----", "----"]];
+  Sheldon.setValues(SheldonValues);
+ 
+  // MINI-RAC position 4
+  var miniRAC = sheet3.getRange('A5:C5');
+  miniRAC.setBorder(true, true, true, true, true, true);
+  var miniRACValues = [["mini-RAC", "----", "----"]];
+  miniRAC.setValues(miniRACValues);
+
+  // BCURACK position 5
+  var BCURack = sheet3.getRange('A6:C6');
+  BCURack.setBorder(true, true, true, true, true, true);
+  var BCURackValues = [["BCU Rack", "----", "----"]];
+  BCURack.setValues(BCURackValues);
+
+  
+  
+  
+  var data = sheet2.getDataRange().getValues();
+  for (var i = 0; i < data.length; i++)
+  {
+    Logger.log("Product Name: " + data[i][0]);
+    Logger.log("Product Number: " + data[i][1]);
+    
+    if (data[i][1] == 'Leonard')
+    {
+//      Logger.log("LEONARD HAS BEEN FOUND!!!!!!!!");
+//      LeonardRoom.setValue(data[i][2]);
+      
+    }
+//    else if (data[i][1] == 'Howard')
+//    {
+//      HowardRoom.setValue(data[i][2]);
+//    }
+//    else if (data[i][1] == 'Sheldon')
+//    {
+//      SheldonRoom.setValue(data[i][2]);
+//    }
+//    else if (data[i][1] == 'mini-RAC')
+//    {
+//      miniRACRoom.setValue(data[i][2]);
+//    }
+//    else if (data[i][1] == 'BCU')
+//    {
+//      BCURoom.setValue(data[i][2]);
+//    }
+
+    
+  }
+  
+  
+  try {
+    // Script Code Here
+//    MailApp.sendEmail("cenyuab@gmail.com", "All is Good!!!", "Sheet 1: " + sheet1.getSheetName() + " Sheet 2: " + sheet2.getSheetName());
+//    MailApp.sendEmail("cenyuab@gmail.com", "Good.", "Sheet1: " + sheet1.getName());
+//    MailApp.sendEmail('cenyuab@gmail.com', 'Good.', message + " Last Row: " + sheet2.getLastRow());    
+    MailApp.sendEmail('cenyuab@gmail.com', 'Good.', "Values: " + values + " MESSAGE2: " + message2);    
+
+
+  } catch (e) {
+    MailApp.sendEmail("cenyuab@gmail.com", "Error Report", e.message);
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}

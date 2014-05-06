@@ -1,0 +1,154 @@
+// Jonathan Hicks
+// sheetCompileScript
+
+// DESCRIPTION:
+// On form submit, records the last known location of each
+// system on an assigned line in a separate sheet in spreadsheet.
+
+// NOTES:
+// setBorder values = (top left bottom right vertical horizontal); as boolean (true/false)
+
+function myFunction() {
+  
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  
+  var sheet_STATUS = ss.getSheets()[0];
+  var sheet_HISTORY = ss.getSheets()[1];
+//  var sheet1 = ss.getSheets()[0];
+//  var sheet2 = ss.getSheets()[1];
+//  var sheet3 = ss.getSheets()[2];
+
+//  var email = Session.getActiveUser().getEmail();
+//  var message = 'User: ' + email + ' has added to the table ' + sheet2.getName();
+  
+//  var range = sheet2.getRange(1,1,3);
+//  var values = range.getValues();
+  
+//  var currLeonardLocation = '';
+  
+//  var message2 = '';
+  
+//  message2 = values[0][0] + " " + values[1][0] + " " + values[2][0];
+  
+  
+  // SETTING TABLE ALLIGNMENT FOR RANGE range
+  var colOne = "right";      // valid values: right, left, center
+  var colTwo = "center";     // valid values: right, left, center
+  var colThree = "left";     // valid values: right, left, center
+  var colFour = "center";    // valid values: right, left, center
+  var horizontalAlignments = [[colOne, colTwo, colThree, colFour], [colOne, colTwo, colThree, colFour], [colOne, colTwo, colThree, colFour], [colOne, colTwo, colThree, colFour], [colOne, colTwo, colThree, colFour], [colOne, colTwo, colThree, colFour]];
+  var range = sheet_STATUS.getRange("A1:D6");
+  range.setHorizontalAlignments(horizontalAlignments);
+
+  
+  // SET HEADERS
+  var Headers = sheet_STATUS.getRange('A1:D1');
+  Headers.setBorder(true, true, true, true, true, true);
+  Headers.setFontWeight("bold");
+  var HeaderValues = [["Rack Name", "Room Number", "Timestamp", "Initials"]];
+  Headers.setValues(HeaderValues);
+
+  
+  
+  // SET EACH SYSTEM
+
+  // LEONARD position 1
+  var Leonard = sheet_STATUS.getRange('A2:D2');
+  Leonard.setBorder(true, true, true, true, true, true);
+  var LeonardValues = [["LEONARD", "----", "----", "----"]];
+  Leonard.setValues(LeonardValues);
+
+  // HOWARD position 2  
+  var Howard = sheet_STATUS.getRange('A3:D3');
+  Howard.setBorder(true, true, true, true, true, true);
+  var HowardValues = [["HOWARD", "----", "----", "----"]];
+  Howard.setValues(HowardValues);
+  
+  // SHELDON position 3
+  var Sheldon = sheet_STATUS.getRange('A4:D4');
+  Sheldon.setBorder(true, true, true, true, true, true);
+  var SheldonValues = [["SHELDON", "----", "----", "----"]];
+  Sheldon.setValues(SheldonValues);
+ 
+  // MINI-RAC position 4
+  var miniRAC = sheet_STATUS.getRange('A5:D5');
+  miniRAC.setBorder(true, true, true, true, true, true);
+  var miniRACValues = [["mini-RAC", "----", "----", "----"]];
+  miniRAC.setValues(miniRACValues);
+
+  // BCURACK position 5
+  var BCURack = sheet_STATUS.getRange('A6:D6');
+  BCURack.setBorder(true, true, true, true, true, true);
+  var BCURackValues = [["BCU Rack", "----", "----", "----"]];
+  BCURack.setValues(BCURackValues);
+
+  
+  
+  
+  
+  
+  var data = sheet_HISTORY.getDataRange().getValues();
+  for (var i = 0; i < data.length; i++)
+  {
+    Logger.log("Product Name: " + data[i][0]);
+    Logger.log("Product Number: " + data[i][1]);
+    
+    if (data[i][1] == 'Leonard')
+    {
+//      Logger.log("LEONARD HAS BEEN FOUND!!!!!!!!");
+      LeonardValues[0][1] = data[i][2];
+      LeonardValues[0][2] = data[i][0];
+      LeonardValues[0][3] = data[i][3];
+      Leonard.setValues(LeonardValues);
+    }
+    else if (data[i][1] == 'Howard')
+    {
+      HowardValues[0][1] = data[i][2];
+      HowardValues[0][2] = data[i][0];
+      HowardValues[0][3] = data[i][3];
+      Howard.setValues(HowardValues);
+
+    }
+    else if (data[i][1] == 'Sheldon')
+    {
+      SheldonValues[0][1] = data[i][2];
+      SheldonValues[0][2] = data[i][0];
+      SheldonValues[0][3] = data[i][3];
+      Sheldon.setValues(SheldonValues);
+    }
+    else if (data[i][1] == 'mini-RAC')
+    {
+      miniRACValues[0][1] = data[i][2];
+      miniRACValues[0][2] = data[i][0];
+      miniRACValues[0][3] = data[i][3];
+      miniRAC.setValues(miniRACValues);
+    }
+    else if (data[i][1] == 'BCU')
+    {
+      BCURackValues[0][1] = data[i][2];
+      BCURackValues[0][2] = data[i][0];
+      BCURackValues[0][3] = data[i][3];
+      BCURack.setValues(BCURackValues);
+    }
+
+    
+  }
+  
+//  try {
+//    // Script Code Here
+////    MailApp.sendEmail("cenyuab@gmail.com", "All is Good!!!", "Sheet 1: " + sheet1.getSheetName() + " Sheet 2: " + sheet2.getSheetName());
+////    MailApp.sendEmail("cenyuab@gmail.com", "Good.", "Sheet1: " + sheet1.getName());
+////    MailApp.sendEmail('cenyuab@gmail.com', 'Good.', message + " Last Row: " + sheet2.getLastRow());    
+////    MailApp.sendEmail('cenyuab@gmail.com', 'Good.', "Values: " + values + " MESSAGE2: " + message2);    
+//    
+////    var userEmail = Session.getActiveUser().getEmail();
+////
+////    var userMessage = '
+////
+////    MailApp.sendEmail(userEmail, "Receipt for InControl Move Request", userMessage);
+//
+//  } catch (e) {
+//    MailApp.sendEmail("cenyuab@gmail.com", "Error Report", e.message);
+//  }
+}

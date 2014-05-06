@@ -1,0 +1,56 @@
+// Jonathan Hicks
+// formSubmitScript
+
+// DESCRIPTION:
+// On form submit, emails the client and the administrator a notification
+// containing the changes that were made to the system.
+
+// NOTES:
+// Steps to get responses:
+//   1) getResponses() - Gets all Responses to current form
+//   2) Chooses last response(current)
+//   3) getItemResponses() - Gets all itemResponses for this Response
+//   4) Chooses which response to use
+
+function myFunction() {
+  var form = FormApp.getActiveForm();                               // Set for as current form.
+  var formResponses = form.getResponses();                          // Get formResponses for current form.
+  var formResponse = formResponses[formResponses.length - 1];       // Which Response from beginning?
+  var itemResponses = formResponse.getItemResponses();              // Get itemResponses from it.
+  var itemResponse = itemResponses[0];                              // Get which Response you want.
+  var system = itemResponse.getResponse();                          // Get string from Response
+  
+  var itemResponse = itemResponses[1];                              // Get next itemResponse.
+  var room = itemResponse.getResponse();                            // Get string from Response
+  
+  var time = formResponse.getTimestamp();                           // Get Timestamp for Response
+  
+  
+  // Email receipts or errors
+  try 
+  {
+    var subject = "RackTrack Receipt";
+    
+    // Script Code Here
+    var userEmail = Session.getActiveUser().getEmail();
+    var userMoveInfo = "Machine: " + system + " is being moved to room " + room + " at time: " + time;
+    var userThanks = " \n\n Thank you for using the RackTrack Recorded Movement System.";
+    var userSignature = "\n\n System Administrator: \n ~Jonathan Hicks";
+    
+    MailApp.sendEmail(userEmail, subject, userMoveInfo + userThanks + userSignature);
+
+    var adminEmail = "icsysop@gmail.com";
+    var adminMoveInfo = "Machine: " + system + " is being moved to room " + room + " at time: " + time;
+    var adminThanks = " \n\n Thank you for using the RackTrack Recorded Movement System.";
+    var adminSignature = "\n\n System Administrator: \n ~Jonathan Hicks";
+    
+    MailApp.sendEmail(adminEmail, "Admin: " + subject, adminMoveInfo + adminThanks + adminSignature);
+
+  } catch (e) {
+    var adminEmail = "icsysop@gmail.com";
+    var adminMessage = "Error happened for user: " + userEmail + "\n\n";
+  
+    MailApp.sendEmail("cenyuab@gmail.com", "Error Report", adminMessage + e.message);
+  }
+  
+}
